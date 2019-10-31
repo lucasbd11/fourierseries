@@ -81,6 +81,12 @@ class fourier:
         self.a0 = self.average_value()/(self.interval[1])
         self.an = [self.average_value("cos",i+1) for i in range(n)]
         self.bn = [self.average_value("sin",i+1) for i in range(n)]
+        
+        print(self.a0)
+        print("------")
+        print(self.an)
+        print("-----")
+        print(self.bn)
 
     def calculate_function(self):
         interval = self.interval
@@ -94,7 +100,7 @@ class fourier:
             x_axe += [(i)/precision+interval[0]]
             temp_y = 0
             for n in range(len(self.an)):
-                temp_y += self.an[n]*math.cos((math.pi*(n+1)*x_axe[-1])/2) + self.bn[n]*math.sin((math.pi*(n+1)*x_axe[-1])/2)
+                temp_y += self.an[n]*math.cos((math.pi*(n+1)*x_axe[-1])/self.interval[1]) + self.bn[n]*math.sin((math.pi*(n+1)*x_axe[-1])/self.interval[1])
             y_axe += [temp_y]
         
         self.x_axe = x_axe
@@ -129,6 +135,6 @@ class fourier:
 f2 = fourier()
 f2.set_interval([-3.14,3.14])
 f2.set_mode("function")
-f2.calculate_serie(1000)
+f2.calculate_serie(10)
 f2.calculate_function()
 f2.plot(True)
