@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 
 class fourier:
-    def __init__(self, interval = [0,1], precision = 10000, decimals = 5, mode = "point by point"):
+    def __init__(self, interval = [-1,1], precision = 10000, decimals = 5, mode = "point by point"):
         self.data_y = []
         self.data_x = []
         self.serie_sin = []
@@ -33,10 +33,7 @@ class fourier:
     
     def function(self,x):
         if self.mode == "function":
-            if x<0:
-                return 0
-            else:
-                return 1
+            return math.sin(x)
 
         
         if self.mode == "point by point":
@@ -68,20 +65,20 @@ class fourier:
         
         if type == "cos":
             while progress < max(self.interval):
-                sum_integral += self.function(progress)*sub_interval_size*math.cos((n*math.pi*progress)/2)
+                sum_integral += self.function(progress)*sub_interval_size*math.cos((n*math.pi*progress)/self.interval[1])
                 progress += sub_interval_size
         if type == "sin":
             while progress < max(self.interval):
-                sum_integral += self.function(progress)*sub_interval_size*math.sin((n*math.pi*progress)/2)
+                sum_integral += self.function(progress)*sub_interval_size*math.sin((n*math.pi*progress)/self.interval[1])
                 progress += sub_interval_size
         
         
-        return round(sum_integral/(self.interval[1]-self.interval[0]),self.decimals)
+        return round(sum_integral/(self.interval[1]),self.decimals)
         
     
     def calculate_serie(self, n):
 
-        self.a0 = self.average_value()/(self.interval[1]-self.interval[0])
+        self.a0 = self.average_value()/(self.interval[1])
         self.an = [self.average_value("cos",i+1) for i in range(n)]
         self.bn = [self.average_value("sin",i+1) for i in range(n)]
 
@@ -130,9 +127,8 @@ class fourier:
 
 
 f2 = fourier()
-f2.set_interval([-0.5,0.5])
+f2.set_interval([-3.14,3.14])
 f2.set_mode("function")
 f2.calculate_serie(1000)
 f2.calculate_function()
-f2.plot(False)
-
+f2.plot(True)
