@@ -33,7 +33,10 @@ class fourier:
     
     def function(self,x):
         if self.mode == "function":
-            return math.sin(x)
+            if x<0:
+                return 1
+            else:
+                return 0
 
         
         if self.mode == "point by point":
@@ -55,7 +58,7 @@ class fourier:
     
     def average_value(self,type = "null",n = 1):
         sum_integral = 0
-        sub_interval_size = (self.interval[1]-self.interval[0])/self.precision
+        sub_interval_size = (self.interval[1])/self.precision
         progress = min(self.interval)
         
         if type == "null":
@@ -78,7 +81,8 @@ class fourier:
     
     def calculate_serie(self, n):
 
-        self.a0 = self.average_value()/(self.interval[1])
+        #self.a0 = self.average_value()/(self.interval[1])
+        self.a0 = self.average_value()/(2*self.interval[1])
         self.an = [self.average_value("cos",i+1) for i in range(n)]
         self.bn = [self.average_value("sin",i+1) for i in range(n)]
         
@@ -112,6 +116,7 @@ class fourier:
         
         for i in self.y_axe:
             y_axe2 += [i+self.a0]
+
         
         if ref_curve:
             y_axe3 = [self.function(i) for i in self.x_axe]
@@ -123,18 +128,18 @@ class fourier:
         plt.show()
     
 
-# f = fourier()
-# f.set_interval([-1,1])
-# f.set_mode("point by point")
-# f.set_data([[-1,-0.8,-0.5,-0.3,0.2,1],[1,2,4,-4,2,0]])
-# f.calculate_serie(50)
-# f.calculate_function()
-# f.plot(False)
+f = fourier()
+f.set_interval([-1,1])
+f.set_mode("point by point")
+f.set_data([[-1,-0.8,-0.5,-0.3,0.2,1],[1,2,4,-4,2,0]])
+f.calculate_serie(50)
+f.calculate_function()
+f.plot(True)
 
 
-f2 = fourier()
-f2.set_interval([-3.14,3.14])
-f2.set_mode("function")
-f2.calculate_serie(10)
-f2.calculate_function()
-f2.plot(True)
+# f2 = fourier()
+# f2.set_interval([-1,1])
+# f2.set_mode("function")
+# f2.calculate_serie(100)
+# f2.calculate_function()
+# f2.plot(True)
