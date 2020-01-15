@@ -81,8 +81,7 @@ class fourier:
     
     def calculate_serie(self, n):
 
-        #self.a0 = self.average_value()/(self.interval[1])
-        self.a0 = self.average_value()/(2*self.interval[1])
+        self.a0 = self.average_value()/2
         self.an = [self.average_value("cos",i+1) for i in range(n)]
         self.bn = [self.average_value("sin",i+1) for i in range(n)]
         
