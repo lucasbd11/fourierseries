@@ -31,12 +31,12 @@ class fourier:
         if mode == "point by point" or mode == "function":
             self.mode = mode
     
+    def set_function(self,fct):
+        self.fct = fct
+    
     def function(self,x):
         if self.mode == "function":
-            if x<0:
-                return 1
-            else:
-                return 0
+            return fct(x)
 
         
         if self.mode == "point by point":
@@ -81,7 +81,7 @@ class fourier:
     
     def calculate_serie(self, n):
 
-        self.a0 = self.average_value()/2
+        self.a0 = self.average_value()/(2)
         self.an = [self.average_value("cos",i+1) for i in range(n)]
         self.bn = [self.average_value("sin",i+1) for i in range(n)]
         
@@ -93,7 +93,7 @@ class fourier:
 
     def calculate_function(self):
         interval = self.interval
-        precision = 1000
+        precision = self.precision
         x_axe = []
         y_axe = []
         print(interval[0])
@@ -127,18 +127,21 @@ class fourier:
         plt.show()
     
 
-f = fourier()
-f.set_interval([-1,1])
-f.set_mode("point by point")
-f.set_data([[-1,-0.8,-0.5,-0.3,0.2,1],[1,2,4,-4,2,0]])
-f.calculate_serie(50)
-f.calculate_function()
-f.plot(True)
+# f = fourier()
+# f.set_interval([-1,1])
+# f.set_mode("point by point")
+# f.set_data([[-1,-0.8,-0.5,-0.3,0.2,1],[1,2,4,-4,2,0]])
+# f.calculate_serie(50)
+# f.calculate_function()
+# f.plot(True)
 
 
-# f2 = fourier()
-# f2.set_interval([-1,1])
-# f2.set_mode("function")
-# f2.calculate_serie(100)
-# f2.calculate_function()
-# f2.plot(True)
+fct = lambda x: x**2
+
+f2 = fourier()
+f2.set_function(fct)
+f2.set_interval([-1,1])
+f2.set_mode("function")
+f2.calculate_serie(1)
+f2.calculate_function()
+f2.plot(True)
