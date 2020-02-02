@@ -80,23 +80,29 @@ class fourier:
         
     
     def calculate_serie(self, n):
-
+        if type(n) != int:
+            raise ValueError("Invalide argument: integer only")
+        
         self.a0 = self.average_value()/(2)
         self.an = [self.average_value("cos",i+1) for i in range(n)]
         self.bn = [self.average_value("sin",i+1) for i in range(n)]
         
-        print(self.a0)
-        print("------")
-        print(self.an)
-        print("-----")
-        print(self.bn)
+
+    def get_value(self,mode):
+        if mode == "cos":
+            return self.an
+        elif mode == "sin":
+            return self.bn
+        elif mode == "average":
+            return self.a0
+        else:
+            raise ValueError("Invalide argument, accepted arguments are: 'cos','sin','average'")
 
     def calculate_function(self):
         interval = self.interval
         precision = self.precision
         x_axe = []
         y_axe = []
-        print(interval[0])
         
         
         for i in range(int((interval[1]-interval[0])*precision)):
@@ -104,24 +110,20 @@ class fourier:
             temp_y = 0
             for n in range(len(self.an)):
                 temp_y += self.an[n]*math.cos((math.pi*(n+1)*x_axe[-1])/self.interval[1]) + self.bn[n]*math.sin((math.pi*(n+1)*x_axe[-1])/self.interval[1])
-            y_axe += [temp_y]
+            y_axe += [self.a0+temp_y]
         
         self.x_axe = x_axe
         self.y_axe = y_axe
 
     def plot(self, ref_curve = False):
         interval = self.interval
-        y_axe2 = []
-        
-        for i in self.y_axe:
-            y_axe2 += [i+self.a0]
 
         
         if ref_curve:
             y_axe3 = [self.function(i) for i in self.x_axe]
             plt.plot(self.x_axe,y_axe3)
 
-        plt.plot(self.x_axe,y_axe2)
+        plt.plot(self.x_axe,self.y_axe)
 
         
         plt.show()
@@ -142,6 +144,10 @@ f2 = fourier()
 f2.set_function(fct)
 f2.set_interval([-1,1])
 f2.set_mode("function")
-f2.calculate_serie(1)
+f2.calculate_serie(5)
 f2.calculate_function()
+
+
+cos_list = f2.get_value("cos")
+
 f2.plot(True)
