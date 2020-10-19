@@ -36,7 +36,7 @@ class fourier:
     
     def function(self,x):
         if self.mode == "function":
-            return fct(x)
+            return self.fct(x)
 
         
         if self.mode == "point by point":
@@ -129,25 +129,25 @@ class fourier:
         plt.show()
     
 
-# f = fourier()
-# f.set_interval([-1,1])
-# f.set_mode("point by point")
-# f.set_data([[-1,-0.8,-0.5,-0.3,0.2,1],[1,2,4,-4,2,0]])
-# f.calculate_serie(50)
-# f.calculate_function()
-# f.plot(True)
+f = fourier()
+f.set_interval([-1,1])
+f.set_mode("point by point")
+f.set_data([[-1,-0.8,-0.5,-0.3,0.2,1],[1,2,4,-4,2,0]])
+f.calculate_serie(50)
+f.calculate_function()
+f.plot(True)
 
 
-fct = lambda x: x**2
+# fct = lambda x: 1/x
 
-f2 = fourier()
-f2.set_function(fct)
-f2.set_interval([-1,1])
-f2.set_mode("function")
-f2.calculate_serie(5)
-f2.calculate_function()
+# f2 = fourier()
+# f2.set_function(fct)
+# f2.set_interval([0.1,2])
+# f2.set_mode("function")
+# f2.calculate_serie(10)
+# f2.calculate_function()
 
-
-cos_list = f2.get_value("cos")
+# cos_list = f2.get_value("cos")
+# sin_list = f2.get_value("sin")
 
 f2.plot(True)
