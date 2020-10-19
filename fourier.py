@@ -150,4 +150,4 @@ f.plot(True)
 # cos_list = f2.get_value("cos")
 # sin_list = f2.get_value("sin")
 
-f2.plot(True)
+#f2.plot(True)
